@@ -23,8 +23,11 @@ private def generateCubicLabels(adjMatrix: Array[Array[Int]]): Array[Int] = {//I
     }
     cubicLabels
 }
-def longestItem(listSet: Set[List[Int]]): List[Int] = 
-    listSet.toList.sortWith(_.length > _.length).head
+def longestItem(listSet: Set[List[Int]]): List[List[Int]] ={
+    val out = listSet.toList.sortWith(_.length > _.length)
+    val longest = out.head.size
+    out.filter(_.length == longest)
+}
 /*private*/ def generateSequences(adjMatrix: Array[Array[Int]]): Set[List[Int]] = {
     var out = Set.empty[List[Int]]
     val cubicLabels = generateCubicLabels(adjMatrix)
@@ -58,6 +61,10 @@ def longestItem(listSet: Set[List[Int]]): List[Int] =
     def areIsomorphic(tree1: Array[Array[Int]], tree2: Array[Array[Int]]): Boolean = {
         val sequence1 = longestItem(generateSequences(tree1))
         val sequence2 = longestItem(generateSequences(tree2))
-        (sequence1 == sequence2) || (sequence1 == sequence2.reverse)
+        (sequence1.size,sequence2.size) match {
+            case (1,1) => (sequence1.head == sequence2.head) || (sequence1.head == sequence2.head.reverse)
+            case _ => ??? //TODO: Case when there are multiple 'longest' paths
+        }
+
     }
 }
