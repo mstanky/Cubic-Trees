@@ -7,7 +7,7 @@ object Root {
 	def toAdjList(adjMat: Array[Array[Int]]): Array[List[Int]] = 
 		adjMat.map(x => x.zipWithIndex.filter(_._1 == 1).map(_._2).toList)
 
-	def findRoot(adjMat: Array[Array[Int]]): Int = {
+	def findRoot(adjMat: Array[Array[Int]], start: Int): Int = {
 		val adjList = toAdjList(adjMat)
 		def findFurthest(cur: Int, last: List[Int], dist: Int): (Int, List[Int],Int) = {
 			val neighs = adjList(cur).filter(_!=last.head)
