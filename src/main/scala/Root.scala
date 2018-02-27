@@ -9,7 +9,7 @@ object Root {
 
 	def findRoot(adjMat: Array[Array[Int]]): Int = {
 		val adjList = toAdjList(adjMat)
-		def findFurthest(cur: Int, last: List[Int], dist: Int): (Int, List[Int],Int) {
+		def findFurthest(cur: Int, last: List[Int], dist: Int): (Int, List[Int],Int) = {
 			val neighs = adjList(cur).filter(_!=last.head)
 			if(neighs.isEmpty) (cur,dist)
 			else {
