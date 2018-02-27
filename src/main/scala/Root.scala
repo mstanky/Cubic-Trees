@@ -16,7 +16,7 @@ object Root {
 				neighs.map(findFurthest(_,cur :: last,dist+1)).sortWith(_._3 > _._3).head
 			}
 		}
-		val a = findFurthest(0,List.empy[Int],0)
+		val a = findFurthest(0,List.empty[Int],0)
 		val b = findFurthest(a._1,List.empty[Int],0)
 		val diameter = b._3 
 		val median = diameter/2
