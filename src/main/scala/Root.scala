@@ -11,16 +11,13 @@ object Root {
 		val adjList = toAdjList(adjMat)
 		def findFurthest(cur: Int, last: List[Int], dist: Int): (Int, List[Int],Int) = {
 			val neighs = adjList(cur).filter(_!=last.head)
-			if(neighs.isEmpty) (cur,last,dist)
+			if(neighs.isEmpty) (cur,cur :: last,dist)
 			else {
-				if(last.head == -1)
-					neighs.map(findFurthest(_,List(cur),dist+1)).sortWith(_._3 > _._3).head
-				else
-					neighs.map(findFurthest(_,cur :: last,dist+1)).sortWith(_._3 > _._3).head
+				neighs.map(findFurthest(_,cur :: last,dist+1)).sortWith(_._3 > _._3).head
 			}
 		}
-		val a = findFurthest(0,List(-1),0)
-		val b = findFurthest(a._1,List(-1),0)
+		val a = findFurthest(0,List.empy[Int],0)
+		val b = findFurthest(a._1,List.empty[Int],0)
 		val diameter = b._3 
 		val median = diameter/2
 		b._2(median)
