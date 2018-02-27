@@ -10,7 +10,12 @@ object Root {
 	def findRoot(adjMat: Array[Array[Int]], start: Int): Int = {
 		val adjList = toAdjList(adjMat)
 		def findFurthest(cur: Int, last: List[Int], dist: Int): (Int, List[Int],Int) = {
-			val neighs = adjList(cur).filter(_!=last.head)
+			try{
+				val head = last.head
+			} catch {
+				case _ => val head = -1
+			}
+			val neighs = adjList(cur).filter(_!=head)
 			if(neighs.isEmpty) (cur,cur :: last,dist)
 			else {
 				neighs.map(findFurthest(_,cur :: last,dist+1)).sortWith(_._3 > _._3).head
