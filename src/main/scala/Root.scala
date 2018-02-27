@@ -26,7 +26,7 @@ object Root {
 		b._2(median)
 	}
 	def makeRootedMatrix(adjMat: Array[Array[Int]]): Array[Array[Int]] = {
-		var root = findRoot(adjMat)
+		var root = findRoot(adjMat,0)
 		var neighs = findNeighbors(adjMat, root)
 		val out = adjMat.map(_.clone()).clone()
 		var roots = Queue.empty[Int]
@@ -42,7 +42,7 @@ object Root {
 	}
 	def rootCanonicalName(adjMat: Array[Array[Int]]): String = {
 		val out = Array.fill(adjMat.size)("")
-		val root = findRoot(adjMat)
+		val root = findRoot(adjMat,0)
 		val rootedMat = makeRootedMatrix(adjMat)
 
 		def assignCanonicalNames(node: Int): String = {
