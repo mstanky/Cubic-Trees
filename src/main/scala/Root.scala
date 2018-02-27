@@ -14,9 +14,9 @@ object Root {
 			if(neighs.isEmpty) (cur,last,dist)
 			else {
 				if(last.head == -1)
-					neighs.map(findFurthest(_,List(cur),dist+1)).sortWith(_._2> _._2).head
+					neighs.map(findFurthest(_,List(cur),dist+1)).sortWith(_._2 > _._2).head
 				else
-					neighs.map(findFurthest(_,cur :: last,dist+1)).sortWith(_._2> _._2).head
+					neighs.map(findFurthest(_,cur :: last,dist+1)).sortWith(_._2 > _._2).head
 			}
 		}
 		val a = findFurthest(0,List(-1),0)
@@ -45,14 +45,14 @@ object Root {
 		val root = findRoot(adjMat)
 		val rootedMat = makeRootedMatrix(adjMat)
 
-		def assignCanonicalNames(node: Int): Unit = {
-			if(rootedMat(node).count(_==1) == 0) out(node) = "10"
+		def assignCanonicalNames(node: Int): String = {
+			if(rootedMat(node).count(_==1) == 0) "10"
 			else{
 				val children = rootedMat(node).map(child => assignCanonicalNames(child)).sortWith(_.length < _.length)
-				out(node) = "1 " + children.mkString(" ") + " 0"
+				"1 " + children.mkString(" ") + " 0"
 			}
 		}
-		out(root)
+		assignCanonicalNames(root)
 	}
 
 	def ahuTreeIsomorphism(t1: Array[Array[Int]], t2: Array[Array[Int]]): Boolean =
