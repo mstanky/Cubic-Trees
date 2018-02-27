@@ -11,12 +11,12 @@ object Root {
 		val adjList = toAdjList(adjMat)
 		def findFurthest(cur: Int, last: List[Int], dist: Int): (Int, List[Int],Int) = {
 			val neighs = adjList(cur).filter(_!=last.head)
-			if(neighs.isEmpty) (cur,dist)
+			if(neighs.isEmpty) (cur,last,dist)
 			else {
 				if(last.head == -1)
-					neighs.map(findA(_,List(cur),dist+1)).sortWith(_._2> _._2).head
+					neighs.map(findFurthest(_,List(cur),dist+1)).sortWith(_._2> _._2).head
 				else
-					neighs.map(findA(_,cur :: last,dist+1)).sortWith(_._2> _._2).head
+					neighs.map(findFurthest(_,cur :: last,dist+1)).sortWith(_._2> _._2).head
 			}
 		}
 		val a = findFurthest(0,List(-1),0)
@@ -28,18 +28,19 @@ object Root {
 	def makeRootedMatrix(adjMat: Array[Array[Int]]): Array[Array[Int]] = {
 		var root = findRoot(adjMat)
 		var neighs = findNeighbors(adjMat, root)
-		val out = adjMat.deep.copy()
+		val out = adjMat.deep.clone()
+		var roots = Queue[Int]
 
 		while(neighs.nonempty){
 			for(neigh <- neighs)
 				out(neigh)(root) = 0
 			roots = roots.enqueue(neighs)
 			root = roots.dequeue
-			neighs = findNeighbors(root)
+			neighs = findNeighbors(adjMat(root))
 		}
 		out
 	}
-	def rootCanonicalName(adjMat: Array[Array[Int]]): Array[String] = {
+	def rootCanonicalName(adjMat: Array[Array[Int]]): String = {
 		val out = Array.fill(adjMat.size)("")
 		val root = findRoot(adjMat)
 		val rootedMat = makeRootedMatrix(adjMat)
