@@ -55,5 +55,5 @@ object Root {
 	}
 
 	def ahuTreeIsomorphism(t1: Array[Array[Int]], t2: Array[Array[Int]]): Boolean =
-		ahuTreeIsomorphism(t1) == ahuTreeIsomorphism(t2)
+		rootCanonicalName(t1) == rootCanonicalName(t2)
 }
