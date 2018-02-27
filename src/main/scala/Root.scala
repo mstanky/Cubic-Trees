@@ -14,9 +14,9 @@ object Root {
 			if(neighs.isEmpty) (cur,last,dist)
 			else {
 				if(last.head == -1)
-					neighs.map(findFurthest(_,List(cur),dist+1)).sortWith(_._2 > _._2).head
+					neighs.map(findFurthest(_,List(cur),dist+1)).sortWith(_._3 > _._3).head
 				else
-					neighs.map(findFurthest(_,cur :: last,dist+1)).sortWith(_._2 > _._2).head
+					neighs.map(findFurthest(_,cur :: last,dist+1)).sortWith(_._3 > _._3).head
 			}
 		}
 		val a = findFurthest(0,List(-1),0)
@@ -34,7 +34,7 @@ object Root {
 		while(neighs.nonEmpty){
 			for(neigh <- neighs)
 				out(neigh)(root) = 0
-			roots = roots.enqueue(neighs)
+			roots = roots += neighs
 			root = roots.dequeue
 			neighs = findNeighbors(adjMat, root)
 		}
