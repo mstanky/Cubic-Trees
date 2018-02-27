@@ -43,14 +43,13 @@ object Root {
 		out
 	}
 	def rootCanonicalName(adjMat: Array[Array[Int]]): String = {
-		val out = Array.fill(adjMat.size)("")
 		val root = findRoot(adjMat,0)
 		val rootedMat = makeRootedMatrix(adjMat)
 
 		def assignCanonicalNames(node: Int): String = {
-			if(rootedMat(node).count(_==1) == 0) "10"
+			if(rootedMat(node).filter(_==1).isEmpty) "10"
 			else{
-				val children = rootedMat(node).map(child => assignCanonicalNames(child)).sortWith(_.length < _.length)
+				val children = findNeighbors(rootedMat,node).map(child => assignCanonicalNames(child)).sortWith(_.length < _.length)
 				"1 " + children.mkString(" ") + " 0"
 			}
 		}
