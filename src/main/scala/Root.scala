@@ -34,7 +34,7 @@ object Root {
 		while(neighs.nonEmpty){
 			for(neigh <- neighs)
 				out(neigh)(root) = 0
-			roots += neighs
+			roots ++= neighs
 			root = roots.dequeue
 			neighs = findNeighbors(adjMat, root)
 		}
