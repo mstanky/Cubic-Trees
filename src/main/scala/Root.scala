@@ -38,7 +38,7 @@ object Root {
 				out(neigh)(root) = 0
 			roots ++= neighs
 			root = roots.dequeue
-			neighs = findNeighbors(adjMat, root)
+			neighs = findNeighbors(out, root)
 		}
 		out
 	}
