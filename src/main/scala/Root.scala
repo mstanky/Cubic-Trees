@@ -28,15 +28,15 @@ object Root {
 	def makeRootedMatrix(adjMat: Array[Array[Int]]): Array[Array[Int]] = {
 		var root = findRoot(adjMat)
 		var neighs = findNeighbors(adjMat, root)
-		val out = adjMat.deep.clone()
-		var roots = Queue[Int]
+		val out = adjMat.map(_.clone()).clone()
+		var roots = Queue.empty[Int]
 
-		while(neighs.nonempty){
+		while(neighs.nonEmpty){
 			for(neigh <- neighs)
 				out(neigh)(root) = 0
 			roots = roots.enqueue(neighs)
 			root = roots.dequeue
-			neighs = findNeighbors(adjMat(root))
+			neighs = findNeighbors(adjMat, root)
 		}
 		out
 	}
