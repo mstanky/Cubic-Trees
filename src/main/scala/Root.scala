@@ -49,7 +49,10 @@ object Root {
 		def assignCanonicalNames(node: Int): String = {
 			if(rootedMat(node).filter(_==1).isEmpty) "10"
 			else{
-				val children = findNeighbors(rootedMat,node).map(child => assignCanonicalNames(child)).sortWith(_.length < _.length)
+				var childrenNames = List.empty[String]
+				for(child <- rootedMat(node))
+					childrenNames = assignCanonicalNames(child) :: childrenNames
+				//val children = findNeighbors(rootedMat,node).map(child => assignCanonicalNames(child)).sortWith(_.length < _.length)
 				"1 " + children.mkString(" ") + " 0"
 			}
 		}
