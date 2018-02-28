@@ -29,35 +29,27 @@ object Root {
 	}
 	def makeRootedMatrix(adjMat: Array[Array[Int]]): Array[Array[Int]] = {
 		var root = findRoot(adjMat,0)
-		var neighs = findNeighbors(adjMat, root)
 		val out = adjMat.map(_.clone()).clone()
-		var roots = Queue.empty[Int]
-
-		while(neighs.nonEmpty){
-			for(neigh <- neighs)
-				out(neigh)(root) = 0
-			roots ++= neighs
-			root = roots.dequeue
-			neighs = findNeighbors(out, root)
+		def addDirections(node: Int, last: Int): Unit = {
+			val neighs = findNeighbors(out, node)
+			if(last == -1) neighs.map(x => addDirections(x, node))
+			else if(neighs.size == 1) out(node)(last) = 0
+			else{
+				out(node)(last) = 0
+				neighs.filterNot(_ == last).map(x => addDirections(x, node))
+			}
 		}
+		addDirections(root,-1)
 		out
 	}
+	
 	def rootCanonicalName(adjMat: Array[Array[Int]]): String = {
 		val root = findRoot(adjMat,0)
-		//val rootedMat = makeRootedMatrix(adjMat)
+		val rootedMat = makeRootedMatrix(adjMat)
 
 		def assignCanonicalNames(node: Int): String = {
-			if(adjMat(node).filter(_==1).tail.isEmpty) "10"
-			else{
-				var childrenNames = List.empty[String]
-				for(child <- findNeighbors(adjMat,node) if child != node){
-					println(child)
-					childrenNames = assignCanonicalNames(child) :: childrenNames
-				}
-
-				//val children = findNeighbors(rootedMat,node).map(child => assignCanonicalNames(child)).sortWith(_.length < _.length)
-				"1 " + childrenNames.sortWith(_.length < _.length).mkString(" ") + " 0"
-			}
+			if(rootedMat(node).filter(_==1).isEmpty) "10"
+			else "1 " + findNeighbors(rootedMat,node).map(child => assignCanonicalNames(child)).sortWith(_.length < _.length).mkString(" ") + " 0"
 		}
 		assignCanonicalNames(root)
 	}
