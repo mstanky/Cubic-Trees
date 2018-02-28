@@ -50,7 +50,7 @@ object Root {
 			if(rootedMat(node).filter(_==1).isEmpty) "10"
 			else{
 				var childrenNames = List.empty[String]
-				for(child <- rootedMat(node))
+				for(child <- findNeighbors(rootedMat(node)))
 					childrenNames = assignCanonicalNames(child) :: childrenNames
 				//val children = findNeighbors(rootedMat,node).map(child => assignCanonicalNames(child)).sortWith(_.length < _.length)
 				"1 " + childrenNames.mkString(" ") + " 0"
