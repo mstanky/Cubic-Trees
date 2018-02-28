@@ -11,11 +11,11 @@ class ProjectTest extends FunSpec with Matchers{
           ???
     }
     describe("The Root object"){
-        import Root._
         describe("can created a rooted adjacency matrix from a regular one that"){
+            import Root._
             val rootedAdjMat = createdRootedMatrix(treeOne)
             it("has one degree-3 node."){
-                assert( oneRooted.filter( _.count(_ == 1) == 3 ).size == 1 )
+                assert( rootedAdjMat.filter( _.count(_ == 1) == 3 ).size == 1 )
             }
         }
     }
