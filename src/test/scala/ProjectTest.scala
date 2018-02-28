@@ -10,6 +10,8 @@ class ProjectTest extends FunSpec with Matchers{
             it("has one degree-3 node."){
                 assert( rootedAdjMat.filter( _.count(_ == 1) == 3 ).size == 1 )
             }
+            it("all other nodes are either degree-2 or degree-0.")
+                assert( rootedAdjMat.filter( _.count(_ == 1) == (0 || 2) ).size == rootedAdjMat.size - 1)
         }
     }
 }
