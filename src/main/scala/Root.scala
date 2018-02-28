@@ -47,7 +47,7 @@ object Root {
 		//val rootedMat = makeRootedMatrix(adjMat)
 
 		def assignCanonicalNames(node: Int): String = {
-			if(rootedMat(node).filter(_==1).isEmpty) "10"
+			if(adjMat(node).filter(_==1).tail.isEmpty) "10"
 			else{
 				var childrenNames = List.empty[String]
 				for(child <- findNeighbors(adjMat,node) if child != node){
