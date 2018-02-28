@@ -53,7 +53,7 @@ object Root {
 				for(child <- rootedMat(node))
 					childrenNames = assignCanonicalNames(child) :: childrenNames
 				//val children = findNeighbors(rootedMat,node).map(child => assignCanonicalNames(child)).sortWith(_.length < _.length)
-				"1 " + children.mkString(" ") + " 0"
+				"1 " + childrenNames.mkString(" ") + " 0"
 			}
 		}
 		assignCanonicalNames(root)
