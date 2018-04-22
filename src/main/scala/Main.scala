@@ -1,6 +1,9 @@
-import Caterpillar._
+import TwelveCaterpillar._
 
 object Main extends App {
-	for(lab <- labels)
-		println(lab.deep.mkString(","))
+	for(diam <- diams){
+		println(diam.deep.mkString("\n"))
+		println()
+	}
+	println(diams.size)
 }
