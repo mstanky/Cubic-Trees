@@ -8,7 +8,7 @@ object TwelveCaterpillar {
     	var out = Set.empty[Array[Int]]
     	while(smallPerms.hasNext){
     		val smallOrder = smallPerms.next
-    		//if(smallOrder(smallOrder.size - 1) == 0){
+    		if(smallOrder(smallOrder.size - 1) == 0){
 	    		val largePerms = largeSide.permutations
 	    		while(largePerms.hasNext){
 	    			val largeOrder = largePerms.next
@@ -19,7 +19,7 @@ object TwelveCaterpillar {
 		    			if(!out.contains(diam.reverse.toArray)) out += diam.toArray
 	    			}
 	    		}
-    		//}
+    		}
     	}
     	out
     }
