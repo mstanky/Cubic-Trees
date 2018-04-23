@@ -8,11 +8,11 @@ object TwelveCaterpillar {
     	var out = Set.empty[Array[Int]]
     	while(smallPerms.hasNext){
     		val smallOrder = smallPerms.next
-    		if(smallOrder(smallOrder.size - 1) == 0){
+    		if(!smallOrder.contains(0) && largeSide.contains(13)){
 	    		val largePerms = largeSide.permutations
 	    		while(largePerms.hasNext){
 	    			val largeOrder = largePerms.next
-	    			if(largeOrder(0) != 13){
+	    			if(largeOrder(2) == 13){
 		    			var diam = List.empty[Int]
 		    			for(num <- 3 to 0 by -1)
 		    				diam = largeOrder(num) :: smallOrder(num) :: diam
@@ -57,5 +57,16 @@ object TwelveCaterpillar {
     		diffs(Math.abs(tree(0)(num) - tree(1)(num)) - 1) += 1
     	diffs.count(_ > 1) == 0 && tree(1)(2) < 6 && tree(1)(4) < 6 && tree(1)(6) < 6
     }
-    val diams = combs.flatMap(buildDiams(_).toList).filter(isAlphaDiam(_)).flatMap(generateTrees(_).toList).filter(isAlphaTree(_))
+    def compliment(tree: Array[Array[Int]]): Array[Array[Int]] = {
+      val out = tree.map(_.clone)
+      for(num <- 0 until tree(0).size){
+        out(0)(num) = Math.abs(13 - out(0)(num))
+        out(1)(num) match {
+          case -1 => out(1)(num) = -1
+          case _ => out(1)(num) = Math.abs(13 - out(1)(num))
+        }
+      }
+      out
+    }
+    val diams = combs.flatMap(buildDiams(_).toList).filter(isAlphaDiam(_)).flatMap(generateTrees(_).toList).filter(isAlphaTree(_))//.map(compliment(_))
 }
